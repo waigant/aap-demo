@@ -1,0 +1,33 @@
+
+# Azul Zulu
+# https://cdn.azul.com/zulu/bin
+# https://cdn.azul.com/zulu/bin/zulu21.40.17-ca-jdk21.0.6-win_x64.msi
+# https://cdn.azul.com/zulu/bin/zulu21.40.17-ca-jre21.0.6-win_x64.msi
+
+---
+- name: Java Installation
+  hosts: all
+  vars:
+    windows_source_dir: C:\_sources
+    java_installer: https://cdn.azul.com/zulu/bin/zulu21.40.17-ca-jdk21.0.6-win_x64.msi
+
+  tasks:
+    - name: Ensure sources dir exists
+      ansible.windows.win_file:
+        path: "{{ windows_source_dir }}"
+        state: directory
+
+    - name: Download Java Installer {{ java_installer }}
+      when: java_installer | default("") | length > 0
+      ansible.windows.win_get_url:
+        url: "{{ java_installer }}"
+        dest: "{{ windows_source_dir }}\\{{ java_installer | basename }}"
+
+    - name: Install Java
+      when: java_installer | default("") | length > 0
+      ansible.windows.win_package:
+        path: "{{ windows_source_dir }}\\{{ java_installer | basename }}"
+        state: present
+
+...
+

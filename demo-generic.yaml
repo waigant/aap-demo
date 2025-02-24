@@ -1,0 +1,35 @@
+---
+- name: Hello World Sample
+  hosts: all
+  tasks:
+    - name: Hello Message
+      ansible.builtin.debug:
+        msg: "Hello World!"
+
+    - ansible.builtin.copy:
+        content: "Hello World!"
+        dest: 'C:\demo.txt'
+      when: ansible_system == "Win32NT"
+
+    - ansible.builtin.slurp:
+        src: 'C:\demo.txt'
+      when: ansible_system == "Win32NT"
+      register: _demo
+
+    - ansible.builtin.copy:
+        content: "Hello World!"
+        dest: '/tmp/demo.txt'
+      when: ansible_system == "Linux"
+
+    - ansible.builtin.slurp:
+        dest: '/tmp/demo.txt'
+      when: ansible_system == "Linux"
+      register: _demo
+
+    - ansible.builtin.debug:
+        var: _demo
+
+    - ansible.builtin.debug:
+        msg: "{{ _demo.content | b64decode }}"
+...
+

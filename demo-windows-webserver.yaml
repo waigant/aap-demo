@@ -1,0 +1,51 @@
+
+# Azul Zulu
+# https://cdn.azul.com/zulu/bin
+# https://cdn.azul.com/zulu/bin/zulu21.40.17-ca-jdk21.0.6-win_x64.msi
+# https://cdn.azul.com/zulu/bin/zulu21.40.17-ca-jre21.0.6-win_x64.msi
+
+# Apache Tomcat
+# https://dlcdn.apache.org/tomcat/tomcat-11/v11.0.4/bin/apache-tomcat-11.0.4.exe
+
+---
+# - hosts: localhost
+#   gather_facts: false
+#   tasks:
+#     - name: Install required collections
+#       command: ansible-galaxy collection install community.windows
+#       run_once: true
+#       delegate_to: localhost
+
+- name: Webserver Installation
+  hosts: all
+  vars:
+    windows_source_dir: C:\_sources
+    windows_apps_dir: C:\_apps
+    # tomcat_installer: https://dlcdn.apache.org/tomcat/tomcat-11/v11.0.4/bin/apache-tomcat-11.0.4.exe
+    tomcat_archive: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.100/bin/apache-tomcat-9.0.100-windows-x64.zip
+  tasks:
+    - name: Download Tomcat Installer {{ tomcat_installer }}
+      when: tomcat_installer | default("") | length > 0
+      ansible.windows.win_get_url:
+        url: "{{ tomcat_installer }}"
+        dest: "{{ windows_source_dir }}\\{{ tomcat_installer | basename }}"
+
+    - name: Install Tomcat
+      when: tomcat_installer | default("") | length > 0
+      ansible.windows.win_package:
+        path: "{{ windows_source_dir }}\\{{ tomcat_installer | basename }}"
+        state: present
+
+    - name: Download Tomcat Archive {{ tomcat_archive }}
+      when: tomcat_archive | default("") | length > 0
+      ansible.windows.win_get_url:
+        url: "{{ tomcat_archive }}"
+        dest: "{{ windows_source_dir }}\\{{ tomcat_archive | basename }}"
+
+    - name: Decompress Tomcat Archive to {{ windows_apps_dir }}
+      when: tomcat_archive | default("") | length > 0
+      community.windows.win_unzip:
+        src: "{{ windows_source_dir }}\\{{ tomcat_archive | basename }}"
+        dest: "{{ windows_apps_dir }}"
+
+...

@@ -1,0 +1,23 @@
+---
+- name: Hello World Sample
+  hosts: all
+  tasks:
+    - name: Hello Message
+      debug:
+        msg: "Hello World!"
+
+    - ansible.builtin.copy:
+        content: "Hello World!"
+        dest: '/tmp/demo.txt'
+
+    - ansible.builtin.slurp:
+        src: '/tmp/demo.txt'
+      register: _demo
+
+    - ansible.builtin.debug:
+        var: _demo
+
+    - ansible.builtin.debug:
+        msg: "{{ _demo.content | b64decode }}"
+...
+

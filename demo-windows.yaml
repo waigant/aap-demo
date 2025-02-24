@@ -1,0 +1,16 @@
+---
+- name: Hello World Sample
+  hosts: all
+  tasks:
+    - name: Hello Message
+      debug:
+        msg: "Hello World!"
+    - ansible.builtin.slurp:
+        src: 'C:\Users\Administrator\Desktop\demo.txt'
+      register: _demo
+    - debug:
+        var: _demo
+    - debug:
+        msg: "{{ _demo.content | b64decode }}"
+...
+
