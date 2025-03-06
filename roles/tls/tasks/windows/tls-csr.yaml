@@ -1,0 +1,14 @@
+---
+
+- name: Windows TLS CSR - genrsa private pem
+  environment:
+    PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
+  ansible.windows.win_command:
+    chdir: "{{ windows_tls_dir }}"
+    creates: "{{ windows_tls_csr }}"
+    cmd: >
+      openssl genrsa 2048
+      -out {{ windows_tls_csr | basename }}
+  changed_when: false
+
+...

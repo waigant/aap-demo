@@ -12,7 +12,14 @@
     - name: Windows - Certificate Signing Request
       ansible.builtin.include_tasks: windows/tls-csr.yaml
 
-# # Linux
-# - name: Linux - OpenSSL
-#   ansible.builtin.include_tasks: linux/openssl.yaml
-#   when: ansible_system == "Linux"
+- name: Linux
+  when: ansible_system == "Linux"
+  block:
+    - name: Linux - OpenSSL
+      ansible.builtin.include_tasks: linux/openssl.yaml
+
+    - name: Linux - TLS Key
+      ansible.builtin.include_tasks: linux/tls-key.yaml
+
+    - name: Linux - Certificate Signing Request
+      ansible.builtin.include_tasks: linux/tls-csr.yaml

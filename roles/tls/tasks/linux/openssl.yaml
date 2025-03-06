@@ -1,0 +1,14 @@
+---
+
+- name: Linux OpenSSL - Install Package
+  ansible.builtin.dnf:
+    name: openssl
+    state: latest
+
+- name: Linux OpenSSL - Test execution
+  ansible.builtin.command: openssl --version
+  register: _result_openssl
+
+- name: Linux OpenSSL - Debug
+  ansible.builtin.debug:
+    var: _result_openssl

@@ -11,7 +11,11 @@ windows_openssl_apps_dir: "{{ windows_apps_dir }}\\{{ windows_openssl_package_ur
 windows_tls_dir: C:\_apps\tls
 windows_tls_private_pem: C:\_apps\tls\private.pem
 windows_tls_public_pem: C:\_apps\tls\public.pem
+windows_tls_csr: C:\_apps\tls\server.csr
+windows_tls_cer: C:\_apps\tls\server.cer
 
 # linux
 linux_source_dir: /tmp
-linux_apps_dir: /opt
+linux_apps_dir: /apps
+
+
