@@ -19,7 +19,15 @@ linux_source_dir: /tmp
 linux_apps_dir: /apps
 
 linux_tls_dir: /apps/tls
-linux_tls_private_pem: "{{ linux_tls_dir }}/private.pem"
-linux_tls_public_pem: "{{ linux_tls_dir }}/public.pem"
-linux_tls_csr: "{{ linux_tls_dir }}/server.csr"
-linux_tls_cer: "{{ linux_tls_dir }}/server.cer"
+
+# tls
+tls_uris: []
+tls_cns: "{{ tls_uris + [ansible_fqdn] }}"
+tls_subject: "/C=DE/O=gkvi/OU=Container_Test/OU=Infrastruktur_Test/CN={{ _tls_cn }}"
+
+# http proxy
+http_proxy: "http://webproxy.int.it.gkvi:8080"
+
+# telesec
+telesec_url: "https://autocert.telesec.de/webservice/api/v1"
+telesec_authorization: "Basic xxx"

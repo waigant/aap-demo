@@ -1,0 +1,42 @@
+---
+
+- name: Linux TLS Key - generate private pem and CSR
+  ansible.builtin.command:
+    chdir: "{{ linux_tls_dir }}"
+    cmd: >
+      openssl req -nodes -new -newkey rsa:2048 -sha256
+      -keyout {{ __tls_cn }}.pem
+      -out {{ __tls_cn }}.csr -outform PEM
+      -subj "{{ tls_subject }}"
+  changed_when: false
+
+- name: Linux TLS Key - Slurp CSR
+  ansible.builtin.slurp:
+    src: "{{ linux_tls_dir }}/{{ __tls_cn }}.csr"
+  register: _linux_tls_csr
+
+- name: Linux TLS Key - Submit CSR to CA
+  delegate_to: localhost
+  ansible.builtin.uri:
+    url: "{{ telesec_url }}/enroll"
+    method: POST
+    body_format: json
+    body:
+      validityDays: 365
+      pkcs10Data: "{{ _linux_tls_csr.content }}"
+      dnsNameSAN:
+        - "{{ __tls_cn }}"
+      ipAddressSAN:
+        - 127.0.0.1
+    status_code: 200
+    validate_certs: no
+    headers:
+      Content-Type: "application/json"
+      Accept: "application/json"
+      Authorization: "{{ telesec_authorization }}"
+  register: _linux_tls_csr_response
+
+- name: Linux TLS Key - Save Certificate
+  ansible.builtin.copy:
+    content: "{{ _linux_tls_csr_response.json.certificate | b64decode }}"
+    dest: "{{ linux_tls_dir }}/{{ __tls_cn }}.cer"

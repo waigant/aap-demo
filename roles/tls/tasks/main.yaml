@@ -18,10 +18,20 @@
     - name: Linux - OpenSSL
       ansible.builtin.include_tasks: linux/openssl.yaml
 
-    - name: Linux - TLS Key
-      ansible.builtin.include_tasks: linux/tls-key.yaml
+    - name: Linux TLS Key - Ensure tls directory exists
+      become: true
+      ansible.builtin.file:
+        path: "{{ linux_tls_dir }}"
+        state: directory
+        owner: sergeiwaigant
+        group: sergeiwaigant
+        mode: '0700'
 
-    - name: Linux - Certificate Signing Request
-      ansible.builtin.include_tasks: linux/tls-csr.yaml
+    - name: Linux - TLS Key and CSR
+      ansible.builtin.include_tasks: linux/tls-key-csr.yaml
+      loop: "{{ tls_cns }}"
+      loop_control:
+        loop_var: __tls_cn
+        label: "{{ __tls_cn }}"
 
 ...
