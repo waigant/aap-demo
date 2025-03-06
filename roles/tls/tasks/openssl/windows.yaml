@@ -33,5 +33,5 @@
   register: _result_openssl
 
 - name: OpensSSL Windows - Debug
-  ansible.bultin.debug:
+  ansible.builtin.debug:
     var: _result_openssl
