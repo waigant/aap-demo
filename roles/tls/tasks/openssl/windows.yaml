@@ -2,8 +2,8 @@
 
 - name: OpenSSL Windows - Download Package
   ansible.windows.win_get_url:
-    url: "{{ openssl_package_url }}"
-    dest: "{{ windows_source_dir }}\\{{ openssl_package_url | basename }}"
+    url: "{{ windows_openssl_package_url }}"
+    dest: "{{ windows_source_dir }}\\{{ windows_openssl_package_url | basename }}"
 
 # - name: Install OpenSSL Package
 #   ansible.windows.win_package:
@@ -20,7 +20,7 @@
   ansible.windows.win_powershell:
     script: >
       Expand-Archive
-      -Path {{ windows_source_dir }}\{{ openssl_package_url | basename }}
+      -Path {{ windows_source_dir }}\{{ windows_openssl_package_url | basename }}
       -DestinationPath {{ windows_source_dir }}\openssl
   register: _result
 
