@@ -18,12 +18,12 @@
 
 - name: Decompress OpenSSL Package
   ansible.windows.win_powershell:
+    creates: "{{ windows_source_dir }}\\{{ windows_openssl_package_url | basename | splitext | first }}"
     script: >
       Expand-Archive
       -Path {{ windows_source_dir }}\{{ windows_openssl_package_url | basename }}
       -DestinationPath {{ windows_source_dir }}\{{ windows_openssl_package_url | basename | splitext | first }}
-  register: _result
-  creates: "{{ windows_source_dir }}\\{{ windows_openssl_package_url | basename | splitext | first }}"
+  register: _result_decompress
 
 - debug:
-    var: _result
+    var: _result_decompress
