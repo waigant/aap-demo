@@ -4,3 +4,6 @@ windows_source_dir: C:\_sources
 windows_apps_dir: C:\_apps
 linux_source_dir: /tmp
 linux_apps_dir: /opt
+
+openssl_package_url: https://github.com/openssl/openssl/releases/download/openssl-3.4.1/openssl-3.4.1.tar.gz
+

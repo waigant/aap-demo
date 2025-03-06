@@ -1,10 +1,10 @@
 ---
 
-- name: Download OpenSSL Package
+- name: OpenSSL Windows - Download Package
   when: ansible_system == "Win32NT"
   ansible.windows.win_get_url:
-    url: "{{ openssl_package }}"
-    dest: "{{ windows_source_dir }}\\{{ openssl_package | basename }}"
+    url: "{{ openssl_package_url }}"
+    dest: "{{ windows_source_dir }}\\{{ openssl_package_url | basename }}"
 
 # - name: Install OpenSSL Package
 #   when: ansible_system == "Win32NT"
