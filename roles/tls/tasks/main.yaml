@@ -4,7 +4,7 @@
   when: ansible_system == "Win32NT"
   block:
     - name: Windows - OpenSSL
-      ansible.builtin.include_tasks: windows/openssl.yaml
+      ansible.builtin.import_tasks: windows/openssl.yaml
 
     - name: Windows - TLS Key
       ansible.builtin.include_tasks: windows/tls-key.yaml
