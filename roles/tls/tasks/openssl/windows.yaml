@@ -34,4 +34,4 @@
 
 - name: OpensSSL Windows - Debug
   ansible.builtin.debug:
-    var: _result_openssl
+    var: _result_openssl.stdout
