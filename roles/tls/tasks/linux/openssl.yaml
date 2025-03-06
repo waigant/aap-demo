@@ -1,6 +1,7 @@
 ---
 
 - name: Linux OpenSSL - Install Package
+  become: true
   ansible.builtin.dnf:
     name: openssl
     state: latest
