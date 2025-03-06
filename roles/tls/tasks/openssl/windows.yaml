@@ -1,25 +1,28 @@
 ---
 
 - name: OpenSSL Windows - Download Package
-  when: ansible_system == "Win32NT"
   ansible.windows.win_get_url:
     url: "{{ openssl_package_url }}"
     dest: "{{ windows_source_dir }}\\{{ openssl_package_url | basename }}"
 
 # - name: Install OpenSSL Package
-#   when: ansible_system == "Win32NT"
 #   ansible.windows.win_package:
 #     path: "{{ windows_source_dir }}\\{{ tomcat_installer | basename }}"
 #     state: present
-
-# - name: Download Tomcat Archive {{ tomcat_archive }}
-#   when: tomcat_archive | default("") | length > 0
-#   ansible.windows.win_get_url:
-#     url: "{{ tomcat_archive }}"
-#     dest: "{{ windows_source_dir }}\\{{ tomcat_archive | basename }}"
 
 # - name: Decompress Tomcat Archive to {{ windows_apps_dir }}
 #   when: tomcat_archive | default("") | length > 0
 #   community.windows.win_unzip:
 #     src: "{{ windows_source_dir }}\\{{ tomcat_archive | basename }}"
 #     dest: "{{ windows_apps_dir }}"
+
+- name: Decompress OpenSSL Package
+  ansible.windows.win_powershell:
+    script: >
+      Expand-Archive
+      -Path {{ windows_source_dir }}\{{ openssl_package_url | basename }}
+      -DestinationPath {{ windows_source_dir }}\openssl
+  register: _result
+
+- debug:
+    var: _result
