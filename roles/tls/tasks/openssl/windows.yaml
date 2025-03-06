@@ -18,27 +18,15 @@
 
 - name: Decompress OpenSSL Package
   ansible.windows.win_powershell:
-    creates: "{{ windows_apps_dir }}\\openssl"
+    creates: "{{ windows_openssl_apps_dir }}"
     script: >
       Expand-Archive
       -Path {{ windows_source_dir }}\{{ windows_openssl_package_url | basename }}
-      -DestinationPath {{ windows_apps_dir }}\openssl
+      -DestinationPath {{ windows_openssl_apps_dir }}
   register: _result_decompress
-
-# - name: Decompress OpenSSL Package
-#   ansible.windows.win_powershell:
-#     creates: "{{ windows_apps_dir }}\\{{ windows_openssl_package_url | basename | splitext | first }}"
-#     script: >
-#       Expand-Archive
-#       -Path {{ windows_source_dir }}\{{ windows_openssl_package_url | basename }}
-#       -DestinationPath {{ windows_apps_dir }}\{{ windows_openssl_package_url | basename | splitext | first }}
-#   register: _result_decompress
 
 - name: Test OpenSSL execution
   environment:
-    PATH: "{{ windows_apps_dir }}\\openssl\\x64\\bin"
+    PATH: "{{ windows_openssl_apps_dir }}"
   ansible.windows.win_command: openssl --version
   register: _result_openssl
-
-- debug:
-    var: _result_openssl
