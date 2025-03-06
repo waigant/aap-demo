@@ -23,6 +23,7 @@
       -Path {{ windows_source_dir }}\{{ windows_openssl_package_url | basename }}
       -DestinationPath {{ windows_source_dir }}\{{ windows_openssl_package_url | basename | splitext | first }}
   register: _result
+  creates: "{{ windows_source_dir }}\\{{ windows_openssl_package_url | basename | splitext | first }}"
 
 - debug:
     var: _result
