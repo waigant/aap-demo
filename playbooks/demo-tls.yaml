@@ -1,0 +1,5 @@
+---
+- name: TLS certificate generation
+  hosts: all
+  roles:
+    - role: tls

@@ -1,0 +1,9 @@
+---
+
+- name: OpenSSL Windows
+  ansible.builtin.include_tasks: openssl/windows.yaml
+  when: ansible_system == "Win32NT"
+
+- name: OpenSSL Linux
+  ansible.builtin.include_tasks: openssl/linux.yaml
+  when: ansible_system == "Linux"

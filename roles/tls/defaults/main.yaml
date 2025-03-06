@@ -1,0 +1,6 @@
+---
+
+windows_source_dir: C:\_sources
+windows_apps_dir: C:\_apps
+linux_source_dir: /tmp
+linux_apps_dir: /opt
