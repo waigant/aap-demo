@@ -9,6 +9,8 @@ windows_openssl_package_url: https://download.firedaemon.com/FireDaemon-OpenSSL/
 windows_openssl_apps_dir: "{{ windows_apps_dir }}\\{{ windows_openssl_package_url | basename | splitext | first }}"
 
 windows_tls_dir: C:\_apps\tls
+windows_tls_private_pem: C:\_apps\tls\private.pem
+windows_tls_public_pem: C:\_apps\tls\public.pem
 
 # linux
 linux_source_dir: /tmp
