@@ -18,4 +18,8 @@ windows_tls_cer: C:\_apps\tls\server.cer
 linux_source_dir: /tmp
 linux_apps_dir: /apps
 
-
+linux_tls_dir: /apps/tls
+linux_tls_private_pem: "{{ linux_tls_dir }}/private.pem"
+linux_tls_public_pem: "{{ linux_tls_dir }}/public.pem"
+linux_tls_csr: "{{ linux_tls_dir }}/server.csr"
+linux_tls_cer: "{{ linux_tls_dir }}/server.cer"

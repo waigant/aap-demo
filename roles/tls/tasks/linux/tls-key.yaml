@@ -1,0 +1,25 @@
+---
+
+- name: Linux TLS Key - Ensure tls directory exists
+  ansible.windows.win_file:
+    path: "{{ linux_tls_dir }}"
+    state: directory
+
+- name: Linux TLS Key - genrsa private pem
+  ansible.bultin.command:
+    chdir: "{{ linux_tls_dir }}"
+    creates: "{{ linux_tls_private_pem }}"
+    cmd: >
+      openssl genrsa 2048
+      -out {{ linux_tls_private_pem | basename }}
+  changed_when: false
+
+- name: Linux TLS Key - genrsa public pem
+  ansible.bultin.command:
+    chdir: "{{ linux_tls_dir }}"
+    creates: "{{ linux_tls_public_pem }}"
+    cmd: >
+      openssl rsa
+      -in {{ linux_tls_private_pem | basename }}
+      -pubout -out {{ linux_tls_public_pem | basename }}
+  changed_when: false
