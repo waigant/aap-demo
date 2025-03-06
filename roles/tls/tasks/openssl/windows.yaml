@@ -10,13 +10,7 @@
 #     path: "{{ windows_source_dir }}\\{{ tomcat_installer | basename }}"
 #     state: present
 
-# - name: Decompress Tomcat Archive to {{ windows_apps_dir }}
-#   when: tomcat_archive | default("") | length > 0
-#   community.windows.win_unzip:
-#     src: "{{ windows_source_dir }}\\{{ tomcat_archive | basename }}"
-#     dest: "{{ windows_apps_dir }}"
-
-- name: OpenSSL Windows- Decompress Package
+- name: OpenSSL Windows - Decompress Package
   ansible.windows.win_powershell:
     creates: "{{ windows_openssl_apps_dir }}"
     script: >
@@ -25,8 +19,19 @@
       -DestinationPath {{ windows_openssl_apps_dir }}
   register: _result_decompress
 
+# - name: Decompress Tomcat Archive to {{ windows_apps_dir }}
+#   when: tomcat_archive | default("") | length > 0
+#   community.windows.win_unzip:
+#     src: "{{ windows_source_dir }}\\{{ tomcat_archive | basename }}"
+#     dest: "{{ windows_apps_dir }}"
+
 - name: OpenSSL Windows - Test execution
   environment:
     PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
   ansible.windows.win_command: openssl --version
+  changed_when: false
   register: _result_openssl
+
+- name: OpensSSL Windows - Debug
+  ansible.bultin.debug:
+    var: _result_openssl
