@@ -1,10 +1,15 @@
 ---
 
+# windows
 windows_source_dir: C:\_sources
 windows_apps_dir: C:\_apps
-linux_source_dir: /tmp
-linux_apps_dir: /opt
 
 # https://kb.firedaemon.com/support/solutions/articles/4000121705-openssl-binary-distributions-for-microsoft-windows#Download-OpenSSL
 windows_openssl_package_url: https://download.firedaemon.com/FireDaemon-OpenSSL/openssl-3.4.1.zip
 windows_openssl_apps_dir: "{{ windows_apps_dir }}\\{{ windows_openssl_package_url | basename | splitext | first }}"
+
+windows_tls_dir: C:\_apps\tls
+
+# linux
+linux_source_dir: /tmp
+linux_apps_dir: /opt

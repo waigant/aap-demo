@@ -1,6 +1,6 @@
 ---
 
-- name: OpenSSL Windows - Download Package
+- name: Windows OpenSSL - Download Package
   ansible.windows.win_get_url:
     url: "{{ windows_openssl_package_url }}"
     dest: "{{ windows_source_dir }}\\{{ windows_openssl_package_url | basename }}"
@@ -10,7 +10,7 @@
 #     path: "{{ windows_source_dir }}\\{{ tomcat_installer | basename }}"
 #     state: present
 
-- name: OpenSSL Windows - Decompress Package
+- name: Windows OpenSSL - Decompress Package
   ansible.windows.win_powershell:
     creates: "{{ windows_openssl_apps_dir }}"
     script: >
@@ -25,7 +25,7 @@
 #     src: "{{ windows_source_dir }}\\{{ tomcat_archive | basename }}"
 #     dest: "{{ windows_apps_dir }}"
 
-- name: OpenSSL Windows - Test execution
+- name: Windows OpenSSL - Test execution
   environment:
     PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
   ansible.windows.win_command: openssl --version
@@ -34,4 +34,4 @@
 
 - name: OpensSSL Windows - Debug
   ansible.builtin.debug:
-    var: _result_openssl.stdout
+    var: _result_openssl

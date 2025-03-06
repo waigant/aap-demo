@@ -1,0 +1,31 @@
+---
+
+- name: Windows OpenSSL - genrsa private key
+  environment:
+    PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
+  ansible.windows.win_command:
+    chdir: "{{ windows_tls_dir }}"
+    cmd: openssl genrsa -out private.key 2048
+  changed_when: false
+  register: _result_openssl
+
+
+- name: Windows OpenSSL - genrsa pub key
+  environment:
+    PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
+  ansible.windows.win_command:
+    chdir: "{{ windows_tls_dir }}"
+    cmd: openssl rsa -in private.key -pubout -out pub.pem
+  changed_when: false
+  register: _result_openssl
+
+
+- name: Windows OpenSSL - genrsa pkcs8 key
+  environment:
+    PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
+  ansible.windows.win_command:
+    chdir: "{{ windows_tls_dir }}"
+    cmd: openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in private.key -out pkcs8.key
+  changed_when: false
+  register: _result_openssl
+
