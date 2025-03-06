@@ -21,7 +21,7 @@
     script: >
       Expand-Archive
       -Path {{ windows_source_dir }}\{{ windows_openssl_package_url | basename }}
-      -DestinationPath {{ windows_source_dir }}\openssl
+      -DestinationPath {{ windows_source_dir }}\{{ windows_openssl_package_url | basename | splitext | first }}
   register: _result
 
 - debug:
