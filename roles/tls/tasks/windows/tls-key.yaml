@@ -10,7 +10,7 @@
     PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
   ansible.windows.win_command:
     chdir: "{{ windows_tls_dir }}"
-    creates: private.pem
+    creates: "{{ windows_tls_dir }}\\private.pem"
     cmd: openssl genrsa -out private.pem 2048
   changed_when: false
 
@@ -19,6 +19,6 @@
     PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
   ansible.windows.win_command:
     chdir: "{{ windows_tls_dir }}"
-    creates: pub.pem
+    creates: "{{ windows_tls_dir }}\\pub.pem"
     cmd: openssl rsa -in private.pem -pubout -out pub.pem
   changed_when: false
