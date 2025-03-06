@@ -10,7 +10,8 @@
     PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
   ansible.windows.win_command:
     chdir: "{{ windows_tls_dir }}"
-    cmd: openssl genrsa -out private.key 2048
+    creates: private.pem
+    cmd: openssl genrsa -out private.pem 2048
   changed_when: false
 
 - name: Windows TLS Key - genrsa pub key
@@ -18,13 +19,6 @@
     PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
   ansible.windows.win_command:
     chdir: "{{ windows_tls_dir }}"
-    cmd: openssl rsa -in private.key -pubout -out pub.pem
-  changed_when: false
-
-- name: Windows TLS Key - genrsa pkcs8 key
-  environment:
-    PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
-  ansible.windows.win_command:
-    chdir: "{{ windows_tls_dir }}"
-    cmd: openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in private.key -out pkcs8.key
+    creates: pub.pem
+    cmd: openssl rsa -in private.pem -pubout -out pub.pem
   changed_when: false
