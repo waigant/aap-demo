@@ -16,7 +16,7 @@
 #     src: "{{ windows_source_dir }}\\{{ tomcat_archive | basename }}"
 #     dest: "{{ windows_apps_dir }}"
 
-- name: Decompress OpenSSL Package
+- name: OpenSSL Windows- Decompress Package
   ansible.windows.win_powershell:
     creates: "{{ windows_openssl_apps_dir }}"
     script: >
@@ -25,8 +25,8 @@
       -DestinationPath {{ windows_openssl_apps_dir }}
   register: _result_decompress
 
-- name: Test OpenSSL execution
+- name: OpenSSL Windows - Test execution
   environment:
-    PATH: "{{ windows_openssl_apps_dir }}"
+    PATH: "{{ windows_openssl_apps_dir }}\\x64\\bin"
   ansible.windows.win_command: openssl --version
   register: _result_openssl
