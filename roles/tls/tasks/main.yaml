@@ -4,7 +4,7 @@
   when: ansible_system == "Win32NT"
   block:
     - name: Windows - OpenSSL Installation
-      ansible.builtin.include_tasks: windows/opensl.yaml
+      ansible.builtin.include_tasks: windows/openssl.yaml
 
     - name: Windows - Generate TLS Private Key
       ansible.builtin.include_tasks: windows/tls-private-key.yaml
@@ -12,7 +12,7 @@
     - name: Windows - Generate Certificate Signing Request
       ansible.builtin.include_tasks: windows/tls-csr.yaml
 
-# Linux
-- name: Linux - OpenSSL
-  ansible.builtin.include_tasks: linux/openssl.yaml
-  when: ansible_system == "Linux"
+# # Linux
+# - name: Linux - OpenSSL
+#   ansible.builtin.include_tasks: linux/openssl.yaml
+#   when: ansible_system == "Linux"
