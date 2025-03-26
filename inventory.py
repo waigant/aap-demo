@@ -35,25 +35,19 @@ def parse_csv(file_path):
     return inventory
 
 def main():
-    # parser = argparse.ArgumentParser(description="Dynamische Inventory-Quelle für Ansible basierend auf CSV-Daten")
-    # parser.add_argument("--list", action="store_true", help="Gesamte Inventory-Liste ausgeben")
-    # parser.add_argument("--host", help="Host-spezifische Variablen ausgeben (wird hier nicht verwendet)")
-    # parser.add_argument("--csv", default="inventory.csv", help="Pfad zur CSV-Datei (Standard: inventory.csv)")
-    # args = parser.parse_args()
+    parser = argparse.ArgumentParser(description="Dynamische Inventory-Quelle für Ansible basierend auf CSV-Daten")
+    parser.add_argument("--list", action="store_true", help="Gesamte Inventory-Liste ausgeben")
+    parser.add_argument("--host", help="Host-spezifische Variablen ausgeben (wird hier nicht verwendet)")
+    parser.add_argument("--csv", default="inventory.csv", help="Pfad zur CSV-Datei (Standard: inventory.csv)")
+    args = parser.parse_args()
     
-    # Wenn --list angegeben wird, parse die CSV und gebe das Inventory als JSON aus
-    # if args.list:
-    #     inventory = parse_csv(args.csv)
-    #     print(json.dumps(inventory, indent=2))
-    # # Für --host wird ein leeres Dictionary zurückgegeben, da alle Hostvariablen bereits in _meta.hostvars enthalten sind.
-    # elif args.host:
-    #     print(json.dumps({}))
-    # else:
-    #     # Falls keine Option angegeben wurde, gib ebenfalls ein leeres Inventory aus.
-    #     print(json.dumps({}))
-
-    inventory = parse_csv("inventory.csv")
-    print(json.dumps(inventory, indent=2))
+    if args.list:
+        inventory = parse_csv(args.csv)
+        print(json.dumps(inventory, indent=2))
+    elif args.host:
+        print(json.dumps({}))
+    else:
+        print(json.dumps({}))
 
 if __name__ == "__main__":
     main()
