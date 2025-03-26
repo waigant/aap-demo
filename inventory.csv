@@ -1,0 +1,4 @@
+host,group,ansible_host,ansible_user
+web1,webservers,192.168.1.10,ubuntu
+web2,webservers,192.168.1.11,ubuntu
+db1,database,192.168.1.20,postgres
